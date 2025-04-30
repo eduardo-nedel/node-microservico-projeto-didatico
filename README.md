@@ -32,7 +32,7 @@ apps/
 │   └── src/
 │       ├── users/        # Módulo de Usuários
 │       └── app.module.ts # Módulo principal
-└── libs/                  # Biblioteca compartilhada
+ libs/                  # Biblioteca compartilhada
     └── shared/
         └── src/
             ├── dto/         # DTOs compartilhados
@@ -134,11 +134,6 @@ Para entender como este projeto foi desenvolvido, pode-se seguir os seguintes pa
    - Implementação do controller para roteamento
    - Configuração da comunicação TCP com o serviço de usuários
    - Implementação da documentação com Swagger
-
-4. **Integração e Testes**
-   - Configuração dos serviços para comunicação
-   - Testes de integração entre os serviços
-   - Testes end-to-end da aplicação
 
 ## 🚧 Deploy do Sistema
 

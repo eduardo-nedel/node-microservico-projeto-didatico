@@ -2,12 +2,13 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto, User } from '@app/shared';
+import { usersServiceCommands } from '@app/shared/commands/users-service';
 
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @MessagePattern({ cmd: 'create_user' })
+  @MessagePattern({ cmd: usersServiceCommands.createUser })
   async create(@Payload() createUserDto: CreateUserDto): Promise<User> {
     return await this.usersService.create(createUserDto);
   }
@@ -31,4 +32,4 @@ export class UsersController {
   async remove(@Payload() id: number): Promise<void> {
     await this.usersService.remove(id);
   }
-} 
+}

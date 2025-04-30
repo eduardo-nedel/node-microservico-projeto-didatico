@@ -1,21 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserDto, UpdateUserDto, User } from '@app/shared';
+import { usersServiceCommands } from '@app/shared/commands/users-service';
 
 @ApiTags('gateway')
 @Controller('gateway')
 export class GatewayController {
-  constructor(
-    @Inject('USERS_SERVICE') private readonly usersClient: ClientProxy,
-  ) {}
+  constructor(@Inject('USERS_SERVICE') private readonly usersClient: ClientProxy) {}
 
   @Post('users')
-  @ApiOperation({ summary: 'Criar um novo usuário através do gateway' })
+  @ApiOperation({
+    summary: 'Criar um novo usuário através do gateway',
+    description: 'Cria um novo usuário no sistema.',
+  })
   @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersClient.send({ cmd: 'create_user' }, createUserDto).toPromise();
+    return await this.usersClient
+      .send({ cmd: usersServiceCommands.createUser }, createUserDto)
+      .toPromise();
   }
 
   @Get('users')
@@ -38,7 +53,9 @@ export class GatewayController {
   @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso.' })
   @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-    return await this.usersClient.send({ cmd: 'update_user' }, { id: +id, updateUserDto }).toPromise();
+    return await this.usersClient
+      .send({ cmd: 'update_user' }, { id: +id, updateUserDto })
+      .toPromise();
   }
 
   @Delete('users/:id')
@@ -49,4 +66,4 @@ export class GatewayController {
   async remove(@Param('id') id: string): Promise<void> {
     await this.usersClient.send({ cmd: 'remove_user' }, +id).toPromise();
   }
-} 
+}

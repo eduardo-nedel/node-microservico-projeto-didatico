@@ -10,4 +10,4 @@ import { GatewayModule } from './gateway/gateway.module';
     GatewayModule,
   ],
 })
-export class AppModule {} 
+export class AppModule {}

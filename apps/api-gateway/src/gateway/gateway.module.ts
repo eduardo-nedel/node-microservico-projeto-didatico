@@ -17,4 +17,4 @@ import { GatewayController } from './gateway.controller';
   ],
   controllers: [GatewayController],
 })
-export class GatewayModule {} 
+export class GatewayModule {}

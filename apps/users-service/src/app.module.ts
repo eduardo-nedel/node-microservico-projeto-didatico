@@ -22,4 +22,4 @@ import { User } from '@app/shared';
     UsersModule,
   ],
 })
-export class AppModule {} 
+export class AppModule {}
